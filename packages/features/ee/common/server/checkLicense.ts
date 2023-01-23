@@ -19,22 +19,7 @@ const schemaLicenseKey = z
   });
 
 async function checkLicense(license: string): Promise<boolean> {
-  if (!!process.env.NEXT_PUBLIC_IS_E2E) return true;
-  if (!license) return false;
-  const url = `${CONSOLE_URL}/api/license?key=${schemaLicenseKey.parse(license)}`;
-  const cachedResponse = cache.get(url);
-  if (cachedResponse) {
-    return cachedResponse;
-  } else {
-    try {
-      const response = await fetch(url, { mode: "cors" });
-      const data = await response.json();
-      cache.put(url, data.valid, CACHING_TIME);
-      return data.valid;
-    } catch (error) {
-      return false;
-    }
-  }
+  return true;
 }
 
 export default checkLicense;
